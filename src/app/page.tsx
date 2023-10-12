@@ -1,11 +1,11 @@
-import { Suspense } from "react"
-import Link from "next/link"
-import Layout from "src/core/layouts/Layout"
-import { useCurrentUser } from "src/users/hooks/useCurrentUser"
-import logout from "src/auth/mutations/logout"
+"use client"
+
+import { BlitzPage } from "@blitzjs/next"
 import { useMutation } from "@blitzjs/rpc"
-import { Routes, BlitzPage } from "@blitzjs/next"
+import Link from "next/link"
+import logout from "src/auth/mutations/logout"
 import styles from "src/styles/Home.module.css"
+import { useCurrentUser } from "src/users/hooks/useCurrentUser"
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -15,6 +15,7 @@ import styles from "src/styles/Home.module.css"
 const UserInfo = () => {
   const currentUser = useCurrentUser()
   const [logoutMutation] = useMutation(logout)
+
 
   if (currentUser) {
     return (
@@ -37,10 +38,10 @@ const UserInfo = () => {
   } else {
     return (
       <>
-        <Link href={Routes.SignupPage()} className={styles.button}>
+        <Link href="/signup" className={styles.button}>
           <strong>Sign Up</strong>
         </Link>
-        <Link href={Routes.LoginPage()} className={styles.loginButton}>
+        <Link href="login" className={styles.loginButton}>
           <strong>Login</strong>
         </Link>
       </>
@@ -50,7 +51,7 @@ const UserInfo = () => {
 
 const Home: BlitzPage = () => {
   return (
-    <Layout title="Home">
+    <>
       <div className={styles.globe} />
 
       <div className={styles.container}>
@@ -76,9 +77,7 @@ const Home: BlitzPage = () => {
               {/* Auth */}
 
               <div className={styles.buttonContainer}>
-                <Suspense fallback="Loading...">
                   <UserInfo />
-                </Suspense>
               </div>
             </div>
 
@@ -188,7 +187,7 @@ const Home: BlitzPage = () => {
           </a>
         </footer>
       </div>
-    </Layout>
+    </>
   )
 }
 

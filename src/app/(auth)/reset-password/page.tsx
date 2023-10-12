@@ -1,17 +1,19 @@
-import Layout from "src/core/layouts/Layout"
-import { LabeledTextField } from "src/core/components/LabeledTextField"
-import { Form, FORM_ERROR } from "src/core/components/Form"
-import { ResetPassword } from "src/auth/schemas"
-import resetPassword from "src/auth/mutations/resetPassword"
-import { BlitzPage, Routes } from "@blitzjs/next"
-import { useRouter } from "next/router"
+"use client"
+
+import { BlitzPage } from "@blitzjs/next"
 import { useMutation } from "@blitzjs/rpc"
-import Link from "next/link"
 import { assert } from "blitz"
+import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
+import resetPassword from "src/auth/mutations/resetPassword"
+import { ResetPassword } from "src/auth/schemas"
+import { Form, FORM_ERROR } from "src/core/components/Form"
+import { LabeledTextField } from "src/core/components/LabeledTextField"
+import Layout from "src/core/layouts/Layout"
 
 const ResetPasswordPage: BlitzPage = () => {
   const router = useRouter()
-  const token = router.query.token?.toString()
+  const token = useSearchParams()?.get("token") ?? undefined
   const [resetPasswordMutation, { isSuccess }] = useMutation(resetPassword)
 
   return (
@@ -22,7 +24,7 @@ const ResetPasswordPage: BlitzPage = () => {
         <div>
           <h2>Password Reset Successfully</h2>
           <p>
-            Go to the <Link href={Routes.Home()}>homepage</Link>
+            Go to the <Link href={"/"}>homepage</Link>
           </p>
         </div>
       ) : (

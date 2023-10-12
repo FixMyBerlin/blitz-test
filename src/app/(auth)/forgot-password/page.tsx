@@ -1,3 +1,5 @@
+"use client"
+
 import Layout from "src/core/layouts/Layout"
 import { LabeledTextField } from "src/core/components/LabeledTextField"
 import { Form, FORM_ERROR } from "src/core/components/Form"
