@@ -1,11 +1,10 @@
 "use client"
 
-import { Routes, useParam } from "@blitzjs/next";
 import { usePaginatedQuery } from "@blitzjs/rpc";
 import Head from "next/head";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Layout from "src/core/layouts/Layout";
 import getProjects from "src/projects/queries/getProjects";
 
@@ -24,6 +23,16 @@ export const ProjectsList = () => {
 
   const goToPreviousPage = () => router.push("/#query: { page: page - 1 } }");
   const goToNextPage = () => router.push("/#{ query: { page: page + 1 } }");
+
+  const [render, setRender] = useState(false);
+  useEffect(() => {
+    setRender(true);
+  }, []);
+
+  console.log('render', render)
+  if (!render) {
+    return <div>Loading…</div>;
+  }
 
   return (
     <div>
