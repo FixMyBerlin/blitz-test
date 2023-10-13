@@ -1,5 +1,3 @@
-'use client'
-
 import { BlitzProvider } from 'src/blitz-client'
 import '../styles/globals.css'
 
