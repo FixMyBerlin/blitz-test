@@ -1,37 +1,28 @@
 "use client"
 
-import { Routes, useParam } from "@blitzjs/next";
-import { useMutation, useQuery } from "@blitzjs/rpc";
-import Head from "next/head";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Suspense } from "react";
-import Layout from "src/core/layouts/Layout";
-import deleteProject from "src/projects/mutations/deleteProject";
-import getProject from "src/projects/queries/getProject";
+import { useMutation, useQuery } from "@blitzjs/rpc"
+import Link from "next/link"
+import { useParams } from "next/navigation"
+import { Suspense } from "react"
+import deleteProject from "src/projects/mutations/deleteProject"
+import getProject from "src/projects/queries/getProject"
 
-export const Project = () => {
-  const router = useRouter();
-  const projectId = useParam("projectId", "number");
-  const userId = useParam("userId", "number");
-  const [deleteProjectMutation] = useMutation(deleteProject);
-  const [project] = useQuery(getProject, { id: projectId });
+const Project = () => {
+  const projectId = Number(useParams()?.projectId)
+  const [deleteProjectMutation] = useMutation(deleteProject)
+  const [project] = useQuery(getProject, { id: projectId })
 
   return (
     <>
-      <Head>
-        <title>Project {project.id}</title>
-      </Head>
-
       <div>
         <h1>Project {project.id}</h1>
         <pre>{JSON.stringify(project, null, 2)}</pre>
 
         <Link
-          href={Routes.EditProjectPage({
+          href="#{Routes.EditProjectPage({
             userId: userId!,
             projectId: project.id,
-          })}
+          })}"
         >
           Edit
         </Link>
@@ -40,7 +31,7 @@ export const Project = () => {
           type="button"
           onClick={async () => {
             if (window.confirm("This will be deleted")) {
-              await deleteProjectMutation({ id: project.id });
+              await deleteProjectMutation({ id: project.id })
               // await router.push(Routes.ProjectsPage({ userId: userId! }));
             }
           }}
@@ -50,26 +41,23 @@ export const Project = () => {
         </button>
       </div>
     </>
-  );
-};
+  )
+}
 
 const ShowProjectPage = () => {
-  const userId = useParam("userId", "number");
-
   return (
     <div>
       <p>
-        <Link href={Routes.ProjectsPage({ userId: userId! })}>Projects</Link>
+        <Link href="#{Routes.ProjectsPage({ userId: userId! })}">Projects</Link>
       </p>
 
       <Suspense fallback={<div>Loading...</div>}>
         <Project />
       </Suspense>
     </div>
-  );
-};
+  )
+}
 
-ShowProjectPage.authenticate = true;
-ShowProjectPage.getLayout = (page) => <Layout>{page}</Layout>;
+ShowProjectPage.authenticate = true
 
-export default ShowProjectPage;
+export default ShowProjectPage

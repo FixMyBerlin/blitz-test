@@ -1,19 +1,19 @@
 "use client"
 
-import { Routes, useParam } from "@blitzjs/next";
-import { useMutation } from "@blitzjs/rpc";
-import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
-import { Suspense } from "react";
-import Layout from "src/core/layouts/Layout";
-import { FORM_ERROR, ProjectForm } from "src/projects/components/ProjectForm";
-import createProject from "src/projects/mutations/createProject";
-import { CreateProjectSchema } from "src/projects/schemas";
+import { Routes, useParam } from "@blitzjs/next"
+import { useMutation } from "@blitzjs/rpc"
+import Link from "next/link"
+import { useParams, useRouter } from "next/navigation"
+import { Suspense } from "react"
+import Layout from "src/core/layouts/Layout"
+import { FORM_ERROR, ProjectForm } from "src/projects/components/ProjectForm"
+import createProject from "src/projects/mutations/createProject"
+import { CreateProjectSchema } from "src/projects/schemas"
 
 const NewProjectPage = () => {
-  const router = useRouter();
-  const userId = useParams()?.userId;
-  const [createProjectMutation] = useMutation(createProject);
+  const router = useRouter()
+  const userId = Number(useParams()?.userId)
+  const [createProjectMutation] = useMutation(createProject)
 
   return (
     <Layout title={"Create New Project"}>
@@ -27,15 +27,17 @@ const NewProjectPage = () => {
             try {
               const project = await createProjectMutation({
                 ...values,
-                // userId: userId,
-              });
-              await router.push("/#Routes.ShowProjectPage({userId: userId!,projectId: project.id,})"
-              );
+                active: true,
+                userId: userId,
+              })
+              await router.push(
+                "/#Routes.ShowProjectPage({userId: userId!,projectId: project.id,})",
+              )
             } catch (error: any) {
-              console.error(error);
+              console.error(error)
               return {
                 [FORM_ERROR]: error.toString(),
-              };
+              }
             }
           }}
         />
@@ -44,9 +46,9 @@ const NewProjectPage = () => {
         <Link href={`/#Routes.ProjectsPage({ userId: userId! })`}>Projects</Link>
       </p>
     </Layout>
-  );
-};
+  )
+}
 
-NewProjectPage.authenticate = true;
+NewProjectPage.authenticate = true
 
-export default NewProjectPage;
+export default NewProjectPage
