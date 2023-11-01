@@ -10,7 +10,7 @@ const GetProject = z.object({
 
 export default resolver.pipe(
   resolver.zod(GetProject),
-  // Error: Cannot read properties of undefined (reading 'session')
+  // TODO: Using with invoce Error: Cannot read properties of undefined (reading 'session')
   resolver.authorize(),
   async ({ id }) => {
     const project = await db.project.findFirst({ where: { id } })

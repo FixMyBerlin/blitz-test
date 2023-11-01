@@ -1,5 +1,5 @@
 import { invoke } from "@blitzjs/rpc"
-import getProjectSessionError from "src/projects/queries/getProject-session-error"
+import getProjectSessionError from "src/projects/queries/getProjectSessionError"
 
 export default async function Project({ params }) {
   console.warn("foo", params)
