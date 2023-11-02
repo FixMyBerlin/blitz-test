@@ -4,9 +4,9 @@ import { RpcServerPlugin } from "@blitzjs/rpc"
 import { BlitzLogger, NotFoundError } from "blitz"
 import db from "db"
 import { notFound } from "next/navigation"
-import { authConfig } from "./blitz-client"
+import { authConfig } from "./blitz-auth-config"
 
-export const { gSSP, gSP, api } = setupBlitzServer({
+export const { gSSP, gSP, api, useAuthenticatedBlitzContext } = setupBlitzServer({
   plugins: [
     AuthServerPlugin({
       ...authConfig,
