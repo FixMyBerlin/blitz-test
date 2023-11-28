@@ -1,4 +1,4 @@
-import { invoke } from "@blitzjs/rpc"
+import { invoke } from "src/blitz-server"
 import getProjectSessionError from "src/projects/queries/getProjectSessionError"
 
 export default async function Project({ params }) {

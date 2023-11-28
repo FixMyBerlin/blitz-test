@@ -6,7 +6,7 @@ import db from "db"
 import { notFound } from "next/navigation"
 import { authConfig } from "./blitz-auth-config"
 
-export const { gSSP, gSP, api, useAuthenticatedBlitzContext } = setupBlitzServer({
+export const { gSSP, gSP, api, useAuthenticatedBlitzContext, invoke } = setupBlitzServer({
   plugins: [
     AuthServerPlugin({
       ...authConfig,
