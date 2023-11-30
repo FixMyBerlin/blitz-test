@@ -1,9 +1,7 @@
 "use client"
 
 import { BlitzPage } from "@blitzjs/next"
-import { useMutation } from "@blitzjs/rpc"
 import Link from "next/link"
-import logout from "src/auth/mutations/logout"
 import styles from "src/styles/Home.module.css"
 import { useCurrentUser } from "src/users/hooks/useCurrentUser"
 
@@ -14,20 +12,10 @@ import { useCurrentUser } from "src/users/hooks/useCurrentUser"
 
 const UserInfo = () => {
   const currentUser = useCurrentUser()
-  const [logoutMutation] = useMutation(logout)
-
 
   if (currentUser) {
     return (
       <>
-        <button
-          className={styles.button}
-          onClick={async () => {
-            await logoutMutation()
-          }}
-        >
-          Logout
-        </button>
         <div>
           User id: <code>{currentUser.id}</code>
           <br />
@@ -77,7 +65,7 @@ const Home: BlitzPage = () => {
               {/* Auth */}
 
               <div className={styles.buttonContainer}>
-                  <UserInfo />
+                <UserInfo />
               </div>
             </div>
 
